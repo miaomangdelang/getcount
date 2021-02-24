@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="error">
+
+    <properties>
+        <property name="Project_Name">getaccount</property>
+        <!--<property name="LOG_HOME">/home/logs/${Project_Name}</property>-->
+        <property name="LOG_HOME">/home/logs/${Project_Name}</property>
+    </properties>
+
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5level %thread %c{.} - %msg%xEx%n"/>
+        </Console>
+
+        <RollingFile name="RollingAccessFile" fileName="${LOG_HOME}/${Project_Name}.log"
+                     immediateFlush="true" append="true"
+                     filePattern="${LOG_HOME}/${Project_Name}.%d{yyyyMMdd}.log.%i">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5level %thread %c{.} - %msg%xEx%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <logger name="org.springframework" level="INFO" additivity="true">
+        </logger>
+        <logger name="org.hibernate" level="INFO" additivity="true">
+        </logger>
+        <logger name="com.gfwg.resultUpload" level="INFO" additivity="true">
+        </logger>
+        <!--<logger name="cn.autosynms.mapper.DpsMapper" level="INFO" additivity="true">-->
+            <!--<AppenderRef ref="Console"/>-->
+        <!--</logger>-->
+        <root level="INFO" includeLocation="true" additivity="false">
+            <appender-ref ref="RollingAccessFile" />
+            <appender-ref ref="Console"/>
+        </root>
+    </loggers>
+
+</configuration>
